@@ -27,6 +27,7 @@ public:
     ~MainWindow();
     ofstream fout;
 
+
 public slots:
     void Actualizar();
 

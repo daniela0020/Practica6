@@ -20,11 +20,11 @@ cuerpo::cuerpo(float _x, float _y, float _vx, float _vy, float _rad, float _masa
     // setPos((x/EX), (y/EY));
 
     // ajustando los cuadrates
-    //setPos((x/EX), (-y/EY));
+    setPos((x/EX), (-y/EY));
 }
 QRectF cuerpo::boundingRect() const
 {
-    return QRect(-radio, -radio, radio*2, radio*2);
+    return QRect(-radio/ER, -radio/ER, (radio*2)/ER, (radio*2)/ER);
 }
 
 void cuerpo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -104,9 +104,9 @@ void cuerpo::aceleracion(float x2, float y2, float m2)
 {
     float dist = 0;
 
-    dist =  pow(pow(x2-x,2)+pow(y2-y,2),0.5);
-    ax = G*m2*(x2-x)/pow(dist,3);
-    ay = G*m2*(y2-y)/pow(dist,3);
+    dist =  pow((pow((x2-x),2) + pow((y2-y),2)),0.5);
+    ax = G*m2*(x2-x)/pow(dist,2);
+    ay = G*m2*(y2-y)/pow(dist,2);
 }
 
 void cuerpo::velocidades()
@@ -119,8 +119,8 @@ void cuerpo::velocidades()
 void cuerpo::posiciones()
 // calcula y Actualiza las posiciones
 {
-    x = x + (vx * DT) + (0.5 * ax * pow(DT,2));
-    y = y + (vy * DT) + (0.5 * ay * pow(DT,2));
+    x = x + (vx * DT); //+ (0.5 * ax * pow(DT,2));
+    y = y + (vy * DT); //+ (0.5 * ay * pow(DT,2));
 
     // sin ajustar los cuadrantes
     // setPos((x/EX), (y/EY));

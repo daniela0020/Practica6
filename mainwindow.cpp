@@ -31,36 +31,36 @@ void MainWindow::Actualizar()
 //Actualiza las velocidades y posiciones del cuerpo
 {
     int i=0, j=0,r=0,e=0;
-
+    /*
     QList <cuerpo*>::iterator K = sistema.begin();
 
     while (K != sistema.end()){
         cout << *K << endl;
         K++;
     }
-
+    */
     if (numCuerpos == contador){
-
-        for (r=0 ; r<5  ; r++)
+        fout.open("Posiciones.txt",ios::app); //abre el archivo para escritura
+        for (r=0 ; r<2  ; r++)
         {
-            fout.open("Posiciones.txt",ios::app); //abre el archivo para escritura
             for (e=0; e < sistema.length(); e++) {
                 for (j=0 ; j < sistema.length() ; j++)
                 {
-                    sistema[j]->aceleracion(sistema[e]->getX(),sistema[e]->getY(),sistema[e]->getMasa());
-                    sistema[j]->velocidades();
-                    sistema[j]->posiciones();
+                    sistema.at(j)->aceleracion(sistema[e]->getX(),sistema[e]->getY(),sistema[e]->getMasa());
+                    sistema.at(j)->velocidades();
+                    sistema.at(j)->posiciones();
                     cout <<"eso "<< sistema[j]->getX() << endl;
-                    fout<< sistema[j]->getX();
+                    fout<< sistema.at(j)->getX();
+                    fout<<' ';
                     fout<<' ';
                     cout <<"eso " << sistema.at(j)->getY() << endl;
                     fout<< sistema.at(j)->getY();
                 }
             }
             fout<<endl;
-            fout.close();
 
         }
+        fout.close();
     }
 }
 
@@ -79,6 +79,7 @@ void MainWindow::on_pushButton_clicked()
         sistema.append(new cuerpo(ui->Xinicial->value(),ui->Yinicial->value(),ui->velocidadX->value(),ui->velocidadY->value(),ui->radio->value(),ui->masa->value()));
         //cout <<"Xinicial: " << ui->Xinicial->value()<<endl;
         //cout <<"getX: " <<sistema[contador]->getX()<< endl;
+
         fout.open("Posiciones.txt",ios::app);
         fout<<sistema[contador]->getX();
         fout<<" ";
@@ -97,10 +98,15 @@ void MainWindow::on_pushButton_clicked()
         ui->velocidadX->setValue(0);
         ui->velocidadY->setValue(0);
         scene->addItem(sistema.last());
-
+        /*
         timer->start(33);
-
+        */
         fout.close();
+
+    }
+    if (contador == numCuerpos-1){
+        Actualizar();
+        timer->start(33);
     }
 
 

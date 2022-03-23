@@ -3,10 +3,11 @@
 #include <QGraphicsItem>
 #include <QPainter>
 #include <math.h>
-#define EX 30
-#define EY 60
-#define G 6.67384 * pow(10,-11)
-#define DT 0.1
+#define EX 20
+#define EY 20
+#define ER 20
+#define G 1
+#define DT 1
 
 class cuerpo : public QGraphicsItem
 {
