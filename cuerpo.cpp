@@ -5,14 +5,14 @@ cuerpo::cuerpo()
 
 }
 */
-cuerpo::cuerpo(float _x, float _y, float _vx, float _vy, float _rad, float _masa)
+cuerpo::cuerpo(double _x, double _y, double _vx, double _vy, double _rad, double _masa)
 {
     x = _x;
     y = _y;
     vx = _vx;
     vy = _vy;
-    //ax = 0;
-    //ay = 0;
+    ax = 0;
+    ay = 0;
     radio = _rad;
     masa = _masa;
 
@@ -33,93 +33,71 @@ void cuerpo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     painter->drawEllipse(boundingRect());
 }
 
-float cuerpo::getX() const
+double cuerpo::getX() const
 {
     return x;
 }
-float cuerpo::getY() const
+double cuerpo::getY() const
 {
     return y;
 }
-float cuerpo::getVx() const
+double cuerpo::getVx() const
 {
     return vx;
 }
-float cuerpo::getVy() const
+double cuerpo::getVy() const
 {
     return vy;
 }
-float cuerpo::getAx() const
+double cuerpo::getAx() const
 {
     return ax;
 }
-float cuerpo::getAy() const
+double cuerpo::getAy() const
 {
     return ay;
 }
-float cuerpo::getRad() const
+double cuerpo::getRad() const
 {
     return radio;
 }
-float cuerpo::getMasa() const
+double cuerpo::getMasa() const
 {
     return masa;
 }
 
 
-void cuerpo::setX(float value)
+void cuerpo::aceleracion(double x2, double y2, double m2, double numCuerpos)
 {
-    x = value;
-}
-void cuerpo::setY(float value)
-{
-    y = value;
-}
-void cuerpo::setVx(float value)
-{
-    vx = value;
-}
-void cuerpo::setVy(float value)
-{
-    vy = value;
-}
-void cuerpo::setAx(float value)
-{
-    ax = value;
-}
-void cuerpo::setAy(float value)
-{
-    ay = value;
-}
-void cuerpo::setRad(float value)
-{
-    radio = value;
-}
-void cuerpo::setMasa(float value)
-{
-    masa = value;
-}
-
-void cuerpo::aceleracion(float x2, float y2, float m2)
-{
-    float dist = 0;
+    double dist = 0;
 
     dist =  pow((pow((x2-x),2) + pow((y2-y),2)),0.5);
-    ax = G*m2*(x2-x)/pow(dist,2);
-    ay = G*m2*(y2-y)/pow(dist,2);
+    if (num<numCuerpos){
+        ax += G*m2*(x2-x)/pow(dist,3);
+        ay += G*m2*(y2-y)/pow(dist,3);
+    }
+    else {
+        atx = ax;
+        aty = ay;
+        ax = G*m2*(x2-x)/pow(dist,3);
+        ay = G*m2*(y2-y)/pow(dist,3);
+        num = 0;
+    }
+    num += 1;
+
 }
 
 void cuerpo::velocidades()
 // calcula las aceleraciones
 {
-    vx = vx + (ax*DT);
-    vy = vy + (ay*DT);
+    vx = vx + (atx*DT);
+    vy = vy + (aty*DT);
 }
 
 void cuerpo::posiciones()
 // calcula y Actualiza las posiciones
 {
-    x = x + (vx * DT); //+ (0.5 * ax * pow(DT,2));
+    x = x + (vx * DT); //+(0.5 * ax * pow(DT,2));
     y = y + (vy * DT); //+ (0.5 * ay * pow(DT,2));
 
     // sin ajustar los cuadrantes

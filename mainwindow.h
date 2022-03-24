@@ -36,6 +36,8 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_pushButton_3_clicked();
+
 private:
     Ui::MainWindow *ui;
     // puntero de mi escena
@@ -55,7 +57,7 @@ private:
 
     //booleano para controlar la simulación
     bool secuencia;
-    unsigned int numCuerpos = 0;
+    double numCuerpos = 0;
     unsigned int contador = 0;
 
 
