@@ -13,6 +13,8 @@ cuerpo::cuerpo(double _x, double _y, double _vx, double _vy, double _rad, double
     vy = _vy;
     ax = 0;
     ay = 0;
+    atx = 0;
+    aty = 0;
     radio = _rad;
     masa = _masa;
 
